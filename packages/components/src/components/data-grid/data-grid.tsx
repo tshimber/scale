@@ -109,8 +109,12 @@ export class DataGrid {
   @Prop() styles: any;
   /** (optional) Set to false to hide table, used for nested tables to re-render upon toggle */
   @Prop() visible?: boolean = true;
-  /** (optional) Title for sortable columns */
+  /** (optional) Tetle for sortable columns */
   @Prop() sortableColumnTitle?: string = 'Activate to sort column';
+  /** (optional) Label of column for initial sort */
+  @Prop() presortcolumnlabel?: string;
+  /** (optional) Direction for initial sort */
+  @Prop() presortdirection?: 'ascending' | 'descending';
   /**
    * (optional) set localization for sort, toggle and select/deselect table
    * Default is English.
@@ -490,12 +494,16 @@ export class DataGrid {
   }
 
   presortIfNeeded(): void {
-    const columnToPresort = this.fields.find(col => col.sortable && col.presort);
+    if (!this.presortcolumnlabel) {
+      return;
+    }
+    const columnToPresort = this.fields.find(col => col.label === this.presortcolumnlabel);
     if (!columnToPresort) {
+      console.warn('Given column label for initial sorting (presortColumnLabel) is not found among given columns.');
       return;
     }
     const columnIndex = this.fields.indexOf(columnToPresort);
-    const direction = columnToPresort.presortDirection === 'descending' ? 'descending' : 'ascending';
+    const direction = this.presortdirection || 'ascending';
     this.presortTable(direction, columnIndex, columnToPresort.type);
   }
 
