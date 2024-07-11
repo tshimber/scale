@@ -109,7 +109,7 @@ export class DataGrid {
   @Prop() styles: any;
   /** (optional) Set to false to hide table, used for nested tables to re-render upon toggle */
   @Prop() visible?: boolean = true;
-  /** (optional) Tetle for sortable columns */
+  /** (optional) Title for sortable columns */
   @Prop() sortableColumnTitle?: string = 'Activate to sort column';
   /** (optional) Label of column for initial sort */
   @Prop() presortcolumnlabel?: string;
